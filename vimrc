@@ -8,14 +8,16 @@ set shiftwidth=4                 "Number of spaces on indent
 "set textwidth=79                 "All files with text width of 79 chars
 set expandtab                    "Use apropiate number of spaces when tab
 set autoindent                   "Use indent from current line on a new line
-"set smartindent                  "Use the smart indent
+set smartindent                  "Use the smart indent
 set smarttab                     "Inserts apropiate number of spaces on <Tab>
 set number                       "Display line numbers
 set cpoptions+=$                 "Show $ char when changing a word
 set wildmenu                     "Popup a menu on autocomplete commands
+set wildignore=*.o,*.pyc,*~      "Ignoring unnecessary files
 set directory=/tmp               "save .swp files on /tmp directory
 set linebreak                    "Wrap long lines at words
-set showbreak=...
+"set showmatch                    "Highlight matching brace
+"set showbreak=...                "Show ... when the line breaks
 "set virtualedit=all              "Posibility to navigate on all the screen
 "set mouse=a                      "Use the mouse if you want
 
@@ -26,6 +28,9 @@ let mapleader=','
 "Shortcut to open files in the same
 "that the current one
 map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
+
+nmap j gj
+nmap k gk
 
 "Tabs mapping keys
 nmap Z :tabprevious<cr>
@@ -50,9 +55,6 @@ nmap e b
 nmap cc ^i/* <ESC>$a */<ESC>
 nmap CC ^<DEL><DEL><DEL>$<DEL><DEL><DEL>
 
-"NERD_tree toggle
-nmap <F10> :NERDTreeToggle<cr>
-
 filetype plugin indent on
 filetype on
 augroup filetypedetect
@@ -72,13 +74,13 @@ set listchars=tab:▸\
 "Black color for tab keys
 hi SpecialKey ctermfg=0
 
-
 if has("autocmd")
     "Auto updating vimrc on save
     autocmd bufwritepost *.vimrc source $MYVIMRC
     "Strip white spaces at end of the line
     autocmd BufWritePre *.py,*.js,*.c,*.h :call <SID>StripTrailingWhitespaces()
-    autocmd! FileType python setl nosmartindent "to avoid comments at start of the line
+    "Don't undent python comments
+    au BufEnter *.py :inoremap # X<C-H># 
 endif
 
 function! <SID>StripTrailingWhitespaces()
@@ -94,7 +96,7 @@ function! <SID>StripTrailingWhitespaces()
 endfunction
 
 "pylint, pychecker and pep8 integrated
-function <SID>PythonGrep(tool)
+function! <SID>PythonGrep(tool)
   set lazyredraw
   " Close any existing cwindows.
   cclose
@@ -104,7 +106,7 @@ function <SID>PythonGrep(tool)
   set grepformat&vim
   let &grepformat = '%f:%l:%m'
   if a:tool == "pylint"
-    let &grepprg = 'pylint --output-format=parseable --reports=n'
+    let &grepprg = 'pylint --output-format=parseable --reports=n --include-ids=y'
   elseif a:tool == "pychecker"
     let &grepprg = 'pychecker --quiet -q'
   elseif a:tool == "pep8"
@@ -132,4 +134,5 @@ function <SID>PythonGrep(tool)
   redraw!
 endfunction
 
-autocmd! FileType python map <F3> :call <SID>PythonGrep('pep8')<CR>
+autocmd FileType python map <F3> :call <SID>PythonGrep('pep8')<CR>
+autocmd FileType python map <F4> :call <SID>PythonGrep('pylint')<CR>
