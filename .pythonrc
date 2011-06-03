@@ -1,0 +1,17 @@
+import os
+import sys
+import atexit
+
+history_path = os.path.expanduser("~/.pyhistory")
+
+def save_history():
+    import readline
+    readline.write_history_file(history_path)
+
+if os.path.exists(history_path):
+    import readline
+    readline.read_history_file(history_path)
+
+atexit.register(save_history)
+
+del os, sys, atexit, readline, save_history
