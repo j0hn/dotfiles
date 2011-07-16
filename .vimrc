@@ -39,14 +39,16 @@ nmap T :tabnew<cr>
 nmap W :tabclose<cr>
 
 "Select all with Ctrl-A
-nmap <C-a> ggVG
+"nmap <C-a> ggVG
 
 "Auto indent all file
 nmap <C-i> mlgg=G'l
 
-"Scroll with Ctrl-J and Ctrl-K
-nmap <C-j> <C-E>
-nmap <C-k> <C-Y>
+"More easily move between windows
+nmap <C-j> <C-W>j
+nmap <C-k> <C-W>k
+nmap <C-h> <C-W>h
+nmap <C-l> <C-W>l
 
 "I preffer to use e as b
 nmap e b
@@ -78,9 +80,9 @@ if has("autocmd")
     "Auto updating vimrc on save
     autocmd bufwritepost *.vimrc source $MYVIMRC
     "Strip white spaces at end of the line
-    autocmd BufWritePre *.py,*.js,*.c,*.h :call <SID>StripTrailingWhitespaces()
+    autocmd! BufWritePre *.py,*.js,*.c,*.h :call <SID>StripTrailingWhitespaces()
     "Don't undent python comments
-    au BufEnter *.py :inoremap # X<C-H># 
+    autocmd! BufEnter *.py setl nosmartindent
 endif
 
 function! <SID>StripTrailingWhitespaces()

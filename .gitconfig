@@ -12,7 +12,6 @@
     remote = green
 
 [color "diff"]
-    meta = yellow bold
     frag = magenta bold
     old = red
     new = green
@@ -23,8 +22,9 @@
     untracked = cyan
 
 [user]
-	name = j0hn
-	email = j0hn.com.ar@gmail.com
+    name = j0hn
+    email = j0hn.com.ar@gmail.com
+
 [alias]
     co = checkout
     ci = commit
@@ -34,3 +34,7 @@
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     type = cat-file -t
     dump = cat-file -p
+
+[github]
+    user = j0hn
+    token = 947f5961b52984daba0d0859a293ad46

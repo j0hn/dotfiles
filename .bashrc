@@ -42,6 +42,9 @@ alias l='ls -CF'
 alias mv='mv -i'
 alias cp='cp -i'
 alias py2html='pygmentize -f html -O full'
+alias pushd="pushd ."
+alias mountiso="sudo mount -o loop -t iso9660"
+alias mplayer="mplayer -zoom -vo x11"
 
 export EDITOR=vim
 export PYTHONSTARTUP=~/.pythonrc
