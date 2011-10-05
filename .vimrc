@@ -1,6 +1,7 @@
 set nocompatible                 "Use Vim settings rather VI's
 set backspace=indent,eol,start   "Allow backspace over everything
 set incsearch                    "Incremental search
+set ignorecase                   "Along with smartcase makes a cool search
 set smartcase                    "Smartcase for search
 set tabstop=4                    "Number of spaces of a <Tab>
 set softtabstop=4                "Number of spaces of a <Tab> while editing
@@ -59,6 +60,7 @@ nmap CC ^<DEL><DEL><DEL>$<DEL><DEL><DEL>
 
 filetype plugin indent on
 filetype on
+syntax on
 augroup filetypedetect
 augroup END
 
