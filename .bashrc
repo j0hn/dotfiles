@@ -10,9 +10,7 @@ fi
 
 color_prompt=yes
 
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
+# Utils
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -22,10 +20,19 @@ alias cp='cp -i'
 alias py2html='pygmentize -f html -O full'
 alias pushd="pushd ."
 alias mountiso="sudo mount -o loop -t iso9660"
+# Mplayer
 alias mplayer="mplayer -zoom -vo x11"
+# Clipboard
 alias xclip="xclip -selection c"
+# moving in dirs
+alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ......="cd ../../../../.."
 
 export EDITOR=vim
+export BROWSER=google-chrome
 export PYTHONSTARTUP=~/.pythonrc
 
 # If not running interactively, don't do anything

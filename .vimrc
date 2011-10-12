@@ -13,7 +13,7 @@ set smartindent                  "Use the smart indent
 set smarttab                     "Inserts apropiate number of spaces on <Tab>
 set number                       "Display line numbers
 set cpoptions+=$                 "Show $ char when changing a word
-set wildmenu                     "Popup a menu on autocomplete commands
+"set wildmenu                     "Popup a menu on autocomplete commands
 set wildignore=*.o,*.pyc,*~      "Ignoring unnecessary files
 set directory=/tmp               "save .swp files on /tmp directory
 set linebreak                    "Wrap long lines at words
