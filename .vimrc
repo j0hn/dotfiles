@@ -1,7 +1,66 @@
+" Setting up Vundle - the vim plugin bundler
+let iCanHazVundle=1
+let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+if !filereadable(vundle_readme)
+    echo "Installing Vundle..."
+    echo ""
+    silent !mkdir -p ~/.vim/bundle
+    silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+    let iCanHazVundle=0
+endif
+
+"Required for vundle
+filetype off
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" Bundles from GitHub repos:
+" Better file browser
+Bundle 'scrooloose/nerdtree'
+" Code commenter
+Bundle 'scrooloose/nerdcommenter'
+" Class/module browser
+Bundle 'majutsushi/tagbar'
+" Code and files fuzzy finder
+Bundle 'kien/ctrlp.vim'
+" PEP8 and python-flakes checker
+Bundle 'nvie/vim-flake8'
+" Git integration
+Bundle 'motemen/git-vim'
+" Powerline
+Bundle 'Lokaltog/vim-powerline'
+
+" Bundles from vim-scripts repos
+" Autocompletition
+Bundle 'AutoComplPop'
+" Pending tasks list
+Bundle 'TaskList.vim'
+" Python code checker
+"Bundle 'pyflakes.vim'
+" Search results counter
+Bundle 'IndexedSearch'
+
+" Installing plugins the first time
+if iCanHazVundle == 0
+    echo "Installing Bundles, please ignore key map error messages"
+    echo ""
+    :BundleInstall
+endif
+
+" allow plugins by file type
+filetype plugin on
+filetype indent on
+
 set nocompatible                 "Use Vim settings rather VI's
 set backspace=indent,eol,start   "Allow backspace over everything
 set incsearch                    "Incremental search
 set ignorecase                   "Along with smartcase makes a cool search
+set infercase                    "Case insensitive for autocomplete
 set smartcase                    "Smartcase for search
 set tabstop=4                    "Number of spaces of a <Tab>
 set softtabstop=4                "Number of spaces of a <Tab> while editing
@@ -20,7 +79,8 @@ set linebreak                    "Wrap long lines at words
 "set showmatch                    "Highlight matching brace
 "set showbreak=...                "Show ... when the line breaks
 "set virtualedit=all              "Posibility to navigate on all the screen
-"set mouse=a                      "Use the mouse if you want
+set mouse=a                      "Use the mouse if you want
+set ls=2                         "Always show status bar
 
 set pastetoggle=<F12>
 
@@ -30,20 +90,31 @@ let mapleader=','
 "that the current one
 map <leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 
-nmap j gj
-nmap k gk
+"Desactivated because vimpager apparently hates it
+"nmap j gj
+"nmap k gk
 
 "Tabs mapping keys
 nmap Z :tabprevious<cr>
 nmap X :tabnext<cr>
 nmap T :tabnew<cr>
-nmap W :tabclose<cr>
+"nmap W :tabclose<cr>
+
+"NERDTree toggle shortchut
+nmap <F12> :NERDTreeToggle<cr>
+
+"Toggle Tagbar display
+map <F5> :TagbarToggle<CR>
+let g:tagbar_autofocus = 1
+
+"Toggle pending tasks list
+map <F2> :TaskList<CR>
 
 "Select all with Ctrl-A
 "nmap <C-a> ggVG
 
 "Auto indent all file
-nmap <C-i> mlgg=G'l
+"nmap <C-i> mlgg=G'l
 
 "More easily move between windows
 nmap <C-j> <C-W>j
@@ -58,15 +129,27 @@ nmap e b
 nmap cc ^i/* <ESC>$a */<ESC>
 nmap CC ^<DEL><DEL><DEL>$<DEL><DEL><DEL>
 
-filetype plugin indent on
-filetype on
-syntax on
-augroup filetypedetect
-augroup END
+"Automatically close autocompletition window
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+"Ctrl+P Fuzzy finder
+let g:ctrlp_map = '<c-f>' " use ctrl+f insteed of ctrl+p
+let g:ctrlp_cmd = 'CtrlPMRU'
+nmap <C-f> :CtrlPMRUFiles<cr>
+"let g:ctrlp_working_path_mode = 2  " search the path backwards
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_jump_to_buffer = 2
+let g:ctrlp_open_new_file = 1
+let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files'] " faster for git usage
 
 "Color change for menu
 highlight Pmenu ctermfg=white ctermbg=NONE guibg=black
 highlight PMenuSel ctermfg=black ctermbg=white
+
+"Cursorline
+set cursorline
+highligh CursorLine cterm=NONE ctermbg=black
 
 "Color columns with more than 80 cols
 highlight MaxCols ctermbg=black guibg=black ctermfg=white guifg=white
@@ -140,3 +223,7 @@ endfunction
 
 autocmd FileType python map <F3> :call <SID>PythonGrep('pep8')<CR>
 autocmd FileType python map <F4> :call <SID>PythonGrep('pylint')<CR>
+
+" 256 colors to add some color to powerline
+let &t_Co = 256
+let g:Powerline_symbols = 'fancy'
