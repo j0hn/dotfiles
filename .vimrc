@@ -145,7 +145,7 @@ let g:ctrlp_user_command = ['.git/', 'cd %s && git ls-files'] " faster for git u
 
 "Color change for menu
 highlight Pmenu ctermfg=white ctermbg=NONE guibg=black
-highlight PMenuSel ctermfg=black ctermbg=white
+highlight PMenuSel ctermfg=white ctermbg=DarkBlue
 
 "Cursorline
 set cursorline
@@ -223,7 +223,13 @@ endfunction
 
 autocmd FileType python map <F3> :call <SID>PythonGrep('pep8')<CR>
 autocmd FileType python map <F4> :call <SID>PythonGrep('pylint')<CR>
+autocmd FileType rst    map <C-j> yypVr*
+autocmd FileType rst    map <C-k> yypVr=
 
 " 256 colors to add some color to powerline
 let &t_Co = 256
 let g:Powerline_symbols = 'fancy'
+
+" Non standar file syntax highlight
+au BufNewFile,BufRead *.owl set filetype=xml
+au BufNewFile,BufRead *.qml set filetype=javascript
