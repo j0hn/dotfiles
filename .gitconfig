@@ -34,7 +34,3 @@
     hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
     type = cat-file -t
     dump = cat-file -p
-
-[github]
-    user = j0hn
-    token = 947f5961b52984daba0d0859a293ad46
